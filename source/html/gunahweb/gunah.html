@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gunah Website</title>
+         <link rel="icon" type="image/png" href="images/lapwing.png">
+        <link rel="stylesheet" href="style.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <style>
+            /* Gaya untuk video background */
+            #background-video {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: -1;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Video Background -->
+        <video id="background-video" autoplay muted loop>
+            <source src="videos/background-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Audio Background -->
+        <audio id="background-audio" autoplay loop>
+            <source src="audio/background-audio.mp3" type="audio/mp3">
+            Your browser does not support the audio tag.
+        </audio>
+        <script>
+  var audio = document.getElementById("background-audio");
+  audio.volume = 0.5;
+</script>
+        <div id="header">
+            <div class="container">
+                <nav>
+                    <img src="images/logo.png" class="logo">
+                    <ul>
+                        <li><a href="https://www.youtube.com/@Gunahaja" target="_blank">
+                            <i class="fa-brands fa-youtube" style="color: red; font-size: 24px;"></i>
+                        </a>
+                    </li>
+                        <li><a href="https://www.facebook.com/profile.php?id=61552800051806" target="_blank"><i class="fa-brands fa-facebook" style="color: #1877F2; font-size: 24px;"></i>
+                        </a>
+                    </li>
+                    <li><a href="game.html" ><i class="fa-solid fa-gamepad" style="color: #f7f584; font-size: 24px;"></i>
+                        </a>
+                    </ul> 
+                </nav>
+                <div class="header-text">
+                    <p>Ordinary Person</p>
+                    <h1>Wassup <br>I'm <span>Gunah</span></h1>
+                </div>
+            </div>
+        </div>
+    </body>
+ 
+</html>

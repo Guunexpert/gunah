@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #6c6e6e;
+    color: #ffffff;
+} 
+#background-video {
+    position: fixed; /* Tetap di tempat meskipun halaman di-scroll */
+    top: 0;
+    left: 0;
+    width: 100%; /* Memenuhi lebar layar */
+    height: 100%; /* Memenuhi tinggi layar */
+    object-fit: cover; /* Agar video memenuhi layar tanpa distorsi */
+    z-index: -1; /* Letakkan di belakang konten lainnya */
+}  
+.container {
+    padding: 10px 5%;
+}
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.logo {
+    width: 140px;
+   
+}
+nav ul li{
+    display: inline-block;
+    list-style: none;
+    margin: 10px 20px;
+}
+nav ul li a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    position: relative;
+}
+nav ul li a::after{
+    content:'';
+    width: 0;
+    height: 3px;
+    background: #9addf1;
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    transition: 0.3s; 
+}
+nav ul li a:hover::after{
+    width: 100%;
+    
+}
+.header-text {
+    margin-top: 15%;
+    font-size: 30px;
+}
+.header-text h1 {
+    font-size: 60px;
+    margin-top: 15px;
+}
+.header-text h1 span {
+    color: #9addf1;
+}
