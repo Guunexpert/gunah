@@ -12,6 +12,7 @@
     <meta property="og:image" content="images/title.png">
     <meta property="og:url" content="https://gunah.is-a.dev">
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -51,14 +52,32 @@
         </div>
         -->
     </div>
+
     <script>
-        document.querySelectorAll('img').forEach(img => {
-            if (img.src.includes(window.location.hostname)) {
-                const originalPath = img.src.split(window.location.hostname)[1];
-                img.src = 'https://statically.io{originalPath}';
-            }
-        });
+        window.onload = function() {
+            const user = "Guunexpert"; 
+            const repo = "gunah"; 
+            const branch = "main";
+
+            document.querySelectorAll('img').forEach(img => {
+                let originalSrc = img.getAttribute('src');
+                if (originalSrc && !originalSrc.startsWith('http')) {
+                    const cleanPath = originalSrc.replace(/^\//, '');
+                    img.src = `https://statically.io{user}/${repo}/${branch}/${cleanPath}`;
+                }
+            });
+
+            document.querySelectorAll('.strip-bg').forEach(el => {
+                let bg = window.getComputedStyle(el).backgroundImage;
+                if (bg !== 'none') {
+                    let path = bg.slice(4, -1).replace(/"/g, "").replace(window.location.origin, "");
+                    const cleanPath = path.replace(/^\//, '');
+                    el.style.backgroundImage = `url(https://statically.io{user}/${repo}/${branch}/${cleanPath})`;
+                }
+            });
+        };
     </script>
+
 
 
 </body></html>
