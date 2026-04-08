@@ -31,15 +31,15 @@
                 <div class="strip-bg" style="background-image: url('/images/mikanoshika.png');"></div>
                 <div class="strip-actions">
                     <a href="https://github.com/MIkanoshika" class="action-btn" target="_blank"><img src="images/github.svg" alt="GitHub"></a>
-                    <a href="https://www.youtube.com/@Mikanoshika" class="action-btn"><img src="images/youtube.png" alt="Web"></a>
+                    <a href="https://www.youtube.com/@Mikanoshika" class="action-btn"><img src="images/youtube.png" alt="YT"></a>
                 </div>
             </div>
 
              <div class="strip">
                 <div class="strip-bg" style="background-image: url('/images/renn.png');"></div>
                 <div class="strip-actions">
-                    <a href="https://saweria.co/RennArchlight" class="action-btn" target="_blank"><img src="images/saweria.png" alt="GitHub"></a>
-                    <a href="https://www.tiktok.com/@zinnx_aza?is_from_webapp=1&sender_device=pc" class="action-btn"><img src="images/tiktok.png" alt="Web"></a>
+                    <a href="https://saweria.co/RennArchlight" class="action-btn" target="_blank"><img src="images/saweria.png" alt="Saweria"></a>
+                    <a href="https://www.tiktok.com/@zinnx_aza?is_from_webapp=1&sender_device=pc" class="action-btn"><img src="images/tiktok.png" alt="TikTok"></a>
                 </div>
             </div>
     </div>
@@ -51,6 +51,14 @@
         </div>
         -->
     </div>
+    <script>
+        document.querySelectorAll('img').forEach(img => {
+            if (img.src.includes(window.location.hostname)) {
+                const originalPath = img.src.split(window.location.hostname)[1];
+                img.src = 'https://statically.io{originalPath}';
+            }
+        });
+    </script>
 
 
 </body></html>
