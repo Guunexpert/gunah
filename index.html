@@ -54,30 +54,47 @@
     </div>
 
     <script>
-        window.onload = function() {
-            const user = "Guunexpert"; 
-            const repo = "gunah"; 
-            const branch = "main";
-
-            document.querySelectorAll('img').forEach(img => {
-                let originalSrc = img.getAttribute('src');
-                if (originalSrc && !originalSrc.startsWith('http')) {
-                    const cleanPath = originalSrc.replace(/^\//, '');
-                    img.src = `https://statically.io{user}/${repo}/${branch}/${cleanPath}`;
-                }
-            });
-
-            document.querySelectorAll('.strip-bg').forEach(el => {
-                let bg = window.getComputedStyle(el).backgroundImage;
-                if (bg !== 'none') {
-                    let path = bg.slice(4, -1).replace(/"/g, "").replace(window.location.origin, "");
-                    const cleanPath = path.replace(/^\//, '');
-                    el.style.backgroundImage = `url(https://statically.io{user}/${repo}/${branch}/${cleanPath})`;
-                }
-            });
+        async function compressAllImages() {
+        const options = {
+            maxSizeMB: 1.3,
+            maxWidthOrHeight: 1280,
+            useWebWorker: true
         };
-    </script>
 
+        const images = document.querySelectorAll('img');
+        for (let img of images) {
+            try {
+            const response = await fetch(img.src);
+            const blob = await response.blob();
+            const compressedFile = await imageCompression(blob, options);
+            img.src = URL.createObjectURL(compressedFile);
+            } catch (e) {
+            console.warn("Skipping img compression for:", img.src);
+            }
+        }
 
+        const bgElements = document.querySelectorAll('.strip-bg');
+        for (let el of bgElements) {
+            try {
+            let style = window.getComputedStyle(el).backgroundImage;
+            let bgUrl = style.slice(4, -1).replace(/"/g, "");
+            
+            if (bgUrl && bgUrl !== 'none') {
+                const response = await fetch(bgUrl);
+                const blob = await response.blob();
+                const compressedFile = await imageCompression(blob, options);
+                const newUrl = URL.createObjectURL(compressedFile);
+                
+                el.style.backgroundImage = `url(${newUrl})`;
+                el.style.opacity = "1";
+            }
+            } catch (e) {
+            console.warn("Skipping BG compression for:", el);
+            }
+        }
+        }
+
+        window.onload = compressAllImages;
+        </script>
 
 </body></html>
