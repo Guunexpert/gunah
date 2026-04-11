@@ -1,7 +1,7 @@
 const stripThemes = {
     1: {
         name: 'gunahd',
-        bgVideo: 'videos/carlotta.mp4',
+        bgVideo: 'videos/Carlotta.mp4',
         bgColor: '#ec9ed9',
         //videoFile: 'videos/waving.mp4',
         accentColor: '#0f3460',
