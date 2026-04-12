@@ -1,9 +1,8 @@
 const stripThemes = {
     1: {
         name: 'gunahd',
-        bgVideo: 'videos/carlotta.mp4',
+        bgVideo: 'videos/Carlotta.mp4',
         bgColor: '#ec9ed9',
-        //videoFile: 'videos/waving.mp4',
         accentColor: '#0f3460',
         animationFrom: 'right'
     },
@@ -11,16 +10,14 @@ const stripThemes = {
         name: 'mikanoshika',
         bgVideo: 'videos/vergil.mp4',
         bgColor: '#2d1b4e',
-        //videoFile: 'videos/waving.mp4',
-        accentColor: '#ff006e',
+        accentColor: '#69a0e7',
         animationFrom: 'right'
     },
     3: {
         name: 'renn',
         bgVideo: 'videos/furina.mp4',
-        bgColor: '#0d3b66',
-        //videoFile: 'videos/waving.mp4',
-        accentColor: '#ee964b',
+        bgColor: '#298fbe',
+        accentColor: '#4d7392',
         animationFrom: 'right'
     }
 };
@@ -52,13 +49,22 @@ strips.forEach((strip, index) => {
         }
 
         if (theme.bgVideo) {
-            if (!bgVideoElement.src.includes(theme.bgVideo)) {
+            const isNewSrc = !bgVideoElement.src.includes(theme.bgVideo);
+            
+            if (isNewSrc) {
+                bgVideoContainer.classList.remove('active');
                 bgVideoElement.src = theme.bgVideo;
                 bgVideoElement.load();
             }
+
             bgVideoElement.currentTime = 0;
-            bgVideoElement.play().catch(e => console.log("Video play error:", e));
-            bgVideoContainer.classList.add('active');
+   
+            bgVideoElement.play().then(() => {
+                requestAnimationFrame(() => {
+                    bgVideoContainer.classList.add('active');
+                });
+            }).catch(e => console.log("Video play error:", e));
+
             document.body.style.backgroundColor = "transparent";
         } else {
             bgVideoContainer.classList.remove('active');
@@ -95,8 +101,8 @@ strips.forEach((strip, index) => {
 
         setTimeout(() => {
             if (!document.querySelector('.strip:hover')) {
-                videoKarakter.pause();
-                bgVideoElement.pause();
+                if(videoKarakter) videoKarakter.pause();
+                if(bgVideoElement) bgVideoElement.pause();
             }
         }, 500);
 
@@ -105,6 +111,21 @@ strips.forEach((strip, index) => {
 });
 
 window.addEventListener('load', () => {
-    if (bgVideoElement) bgVideoElement.muted = true;
-    if (videoKarakter) videoKarakter.muted = true;
+    [bgVideoElement, videoKarakter].forEach(vid => {
+        if (vid) {
+            vid.muted = true;
+            vid.preload = "auto";
+            vid.load();
+        }
+    });
+
+    if(bgVideoElement) {
+        bgVideoElement.play().then(() => {
+            setTimeout(() => {
+                if (!bgVideoContainer.classList.contains('active')) {
+                    bgVideoElement.pause();
+                }
+            }, 150);
+        }).catch(e => console.log("doing preload"));
+    }
 });

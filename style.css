@@ -81,6 +81,7 @@ body {
   z-index: -1;
   pointer-events: none;
   opacity: 0;
+  visibility: hidden;
 }
 
 body.theme-active {
@@ -96,6 +97,7 @@ body.theme-active {
 .theme-bg-video-container.active {
   animation: fadeInBgVideo 0.5s ease forwards;
   opacity: 1;
+  visibility: visible;
 }
 
 @keyframes fadeInBgVideo {
