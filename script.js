@@ -31,15 +31,23 @@ const bgVideoElement = document.querySelector('.theme-bg-video');
 let currentActiveStrip = null;
 
 const playVideoWithEase = (videoEl, containerEl, src) => {
+    if (videoEl.src.includes(src) && containerEl.classList.contains('active')) {
+        return; 
+    }
     containerEl.classList.remove('active');
-    videoEl.addEventListener('loadeddata', function showLoadedVideo() {
-        console.log("Video data loaded:", src);
-        containerEl.classList.add('active');
-    }, { once: true });
+
+    const showVideo = () => {
+        requestAnimationFrame(() => {
+            containerEl.classList.add('active');
+        });
+    };
 
     if (!videoEl.src.includes(src)) {
         videoEl.src = src;
         videoEl.load();
+        videoEl.addEventListener('loadeddata', showVideo, { once: true });
+    } else {
+        showVideo();
     }
     videoEl.currentTime = 0;
     videoEl.play().catch(e => console.log("Play error:", e));
