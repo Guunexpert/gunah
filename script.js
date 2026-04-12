@@ -3,21 +3,21 @@ const stripThemes = {
         name: 'gunahd',
         bgVideo: 'videos/Carlotta.mp4',
         bgColor: '#ec9ed9',
-        accentColor: '#0f3460',
+        accentColor: '#b14b7b',
         animationFrom: 'right'
     },
     2: { 
         name: 'mikanoshika',
         bgVideo: 'videos/vergil.mp4',
-        bgColor: '#2d1b4e',
-        accentColor: '#69a0e7',
+        bgColor: '#55dfdf',
+        accentColor: '#387b8b',
         animationFrom: 'right'
     },
     3: {
         name: 'renn',
         bgVideo: 'videos/furina.mp4',
-        bgColor: '#298fbe',
-        accentColor: '#4d7392',
+        bgColor: '#327abe',
+        accentColor: '#478baa',
         animationFrom: 'right'
     }
 };
@@ -29,6 +29,21 @@ const bgVideoContainer = document.querySelector('.theme-bg-video-container');
 const bgVideoElement = document.querySelector('.theme-bg-video');
 
 let currentActiveStrip = null;
+
+const playVideoWithEase = (videoEl, containerEl, src) => {
+    containerEl.classList.remove('active');
+    videoEl.addEventListener('loadeddata', function showLoadedVideo() {
+        console.log("Video data loaded:", src);
+        containerEl.classList.add('active');
+    }, { once: true });
+
+    if (!videoEl.src.includes(src)) {
+        videoEl.src = src;
+        videoEl.load();
+    }
+    videoEl.currentTime = 0;
+    videoEl.play().catch(e => console.log("Play error:", e));
+};
 
 strips.forEach((strip, index) => {
     strip.addEventListener('mouseenter', () => {
@@ -49,22 +64,7 @@ strips.forEach((strip, index) => {
         }
 
         if (theme.bgVideo) {
-            const isNewSrc = !bgVideoElement.src.includes(theme.bgVideo);
-            
-            if (isNewSrc) {
-                bgVideoContainer.classList.remove('active');
-                bgVideoElement.src = theme.bgVideo;
-                bgVideoElement.load();
-            }
-
-            bgVideoElement.currentTime = 0;
-   
-            bgVideoElement.play().then(() => {
-                requestAnimationFrame(() => {
-                    bgVideoContainer.classList.add('active');
-                });
-            }).catch(e => console.log("Video play error:", e));
-
+            playVideoWithEase(bgVideoElement, bgVideoContainer, theme.bgVideo);
             document.body.style.backgroundColor = "transparent";
         } else {
             bgVideoContainer.classList.remove('active');
@@ -78,7 +78,7 @@ strips.forEach((strip, index) => {
                 videoKarakter.load();
             }
             videoKarakter.currentTime = 0;
-            videoKarakter.play().catch(e => console.log("Char video error:", e));
+            videoKarakter.play().catch(e => console.log("Char error:", e));
             videoContainer.classList.add('active');
         }
 
@@ -88,13 +88,14 @@ strips.forEach((strip, index) => {
     });
 
     strip.addEventListener('mouseleave', () => {
+
         strips.forEach((s) => {
             s.style.opacity = '1';
             s.style.pointerEvents = 'auto';
         });
 
         strip.classList.remove('active-theme');
-        videoContainer.classList.remove('active');
+        if(videoContainer) videoContainer.classList.remove('active');
         bgVideoContainer.classList.remove('active');
         document.body.classList.remove('theme-active');
         document.body.style.backgroundColor = '#050505';
@@ -104,8 +105,7 @@ strips.forEach((strip, index) => {
                 if(videoKarakter) videoKarakter.pause();
                 if(bgVideoElement) bgVideoElement.pause();
             }
-        }, 500);
-
+        }, 600);
         currentActiveStrip = null;
     });
 });
@@ -125,7 +125,7 @@ window.addEventListener('load', () => {
                 if (!bgVideoContainer.classList.contains('active')) {
                     bgVideoElement.pause();
                 }
-            }, 150);
-        }).catch(e => console.log("doing preload"));
+            }, 200);
+        }).catch(e => console.log("Preload warmup logic"));
     }
 });
