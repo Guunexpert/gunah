@@ -1,6 +1,8 @@
 :root {
     --bg-color: #050505;
     --strip-height: 17vh;
+    --strip-aspect: 6.4833;
+    --strip-width: max(calc(var(--strip-height) * var(--strip-aspect)), 50vw);
     --tilt-angle: 9deg;
     /* --transition-speed: 0.5s; */
     --btn-width: calc(var(--strip-height) / 2);
@@ -29,8 +31,13 @@ body {
 
 @media (max-width: 768px) {
     :root {
-        --strip-height: 12vh;
+        --strip-height: calc(90vw / 6.4833);
+        --btn-width: max(calc(var(--strip-height) / 2), 11vw);
         --nav-btn-size: 6vh;
+    }
+
+    .skewed-wrapper {
+        gap: 2dvh;
     }
 
     .nav-controls {
@@ -62,8 +69,7 @@ body {
 
 .strip {
     height: var(--strip-height);
-    width: 200vw;
-    max-width: 1000px;
+    width: var(--strip-width);
     position: relative;
     overflow: hidden;
     background: #111;
@@ -161,18 +167,11 @@ body.theme-active {
 .strip-bg {
     position: absolute;
     inset: 0;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     filter: grayscale(100%) brightness(0.85);
     /* transition: filter var(--transition-speed) ease; */
-}
-
-.strip:nth-child(odd) .strip-bg {
-    background-position: right center;
-}
-
-.strip:nth-child(even) .strip-bg {
-    background-position: left center;
 }
 
 .strip:hover .strip-bg {
@@ -254,9 +253,6 @@ body.theme-active {
 }
 
 @media (max-width: 768px) {
-    .strip {
-        width: 95vw;
-    }
     .strip:nth-child(odd), 
     .strip:nth-child(even) {
         transform: translateX(0);
