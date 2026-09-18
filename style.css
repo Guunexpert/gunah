@@ -277,7 +277,7 @@ body.theme-active {
     width: var(--nav-btn-size);
     height: var(--nav-btn-size);
     font-size: calc(var(--nav-btn-size) * 0.42);
-    border-radius: 50%;
+    border-radius: 10%;
     border: none;
     cursor: pointer;
     display: flex;

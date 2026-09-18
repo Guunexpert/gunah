@@ -86,7 +86,7 @@ strips.forEach((strip, index) => {
                 videoKarakter.load();
             }
             videoKarakter.currentTime = 0;
-            videoKarakter.play().catch(e => console.log("Char error:", e));
+            videoKarakter.play().catch(e => console.log("char error:", e));
             videoContainer.classList.add('active');
         }
 
@@ -134,6 +134,6 @@ window.addEventListener('load', () => {
                     bgVideoElement.pause();
                 }
             }, 200);
-        }).catch(e => console.log("Preload warmup logic"));
+        }).catch(e => console.log("preload warmup logic"));
     }
 });
